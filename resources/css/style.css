@@ -1,0 +1,92 @@
+/* вкладка */
+html{
+    font-family:sans-serif;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%
+}
+
+body{
+		margin: 0;
+		padding: 0;	
+		text-align: left;
+        padding: 15px;
+}
+
+.table {
+	width: 100%;
+	border-collapse: collapse;
+	border: 1px solid #555;
+}
+.table caption {
+	padding: 10px;
+	color: #333;
+	font-size: 16px;
+	text-align: center;
+}
+.table th {
+	padding: 5px;
+	border: 1px solid #555;
+	font-weight: bold;
+	text-align: left;
+}
+.table td {
+	padding: 5px;
+	border: 1px solid #555;
+}
+.table thead th, .table thead td {
+	background: #f9f9f9;
+}
+.table tbody th, .table tbody td {
+	background: #fff;
+}
+.table tfoot th, .table tfoot td {
+	background: #f4f6ff;
+}
+
+.top-block{
+    display: inline-block; /*Задаем блочно-строчное отображение*/
+    width: 480px; /*задаем ширину блока*/
+    padding: 10px;
+}
+
+
+.income_expense_block{
+    height: 160px;
+}
+
+/* Style the tab */
+.tab {
+    overflow: hidden;
+    border: 1px solid #ccc;
+    background-color: #f1f1f1;
+}
+
+/* Style the buttons inside the tab */
+.tab button {
+    background-color: inherit;
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 14px 16px;
+    transition: 0.3s;
+    font-size: 17px;
+}
+
+/* Change background color of buttons on hover */
+.tab button:hover {
+    background-color: #ddd;
+}
+
+/* Create an active/current tablink class */
+.tab button.active {
+    background-color: #ccc;
+}
+
+/* Style the tab content */
+.tabcontent {
+    display: none;
+    padding: 6px 12px;
+    border: 1px solid #ccc;
+    border-top: none;
+}
+/* конец оформления вкладок */
+/* ........................... */

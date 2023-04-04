@@ -1,0 +1,32 @@
+{
+    "name": "lenovo/money2",
+    "autoload": {
+        "psr-4": {
+            "Lenovo\\Money2\\": "src/"
+        },
+        "files": [
+            
+            "routes/routes.php",
+            "database/db.php",
+            "app/Router.php",
+            "app/View.php",
+            "app/Crud.php",
+            "app/Comment.php",
+            "app/Resources.php",
+            "app/Controllers/MainController.php",
+            "app/Controllers/PaymentController.php",
+            "app/Models/Asset.php",
+            "app/Models/Payment.php",
+            "app/Models/PaymentCategory.php",
+            "app/Models/AssetCategory.php",
+            "app/Valid.php"
+
+        ]
+    },
+    "authors": [
+        {
+            "name": "davidoff"
+        }
+    ],
+    "require": {}
+}
