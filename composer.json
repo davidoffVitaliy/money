@@ -14,6 +14,7 @@
             "app/Comment.php",
             "app/Resources.php",
             "app/Controllers/MainController.php",
+            "app/Controllers/CabinetController.php",
             "app/Controllers/PaymentController.php",
             "app/Models/Asset.php",
             "app/Models/Payment.php",

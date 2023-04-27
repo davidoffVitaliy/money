@@ -29,7 +29,7 @@
                     <?php
 	                echo showAllAssetCategory();
                     ?>
-                    <button type="submit">Внести доход</button>
+                    <button class="btn btn-payment">Внести доход</button>
                 </form>
             </div>
             
@@ -54,7 +54,7 @@
                       <!-- Выбор счёта(кошелька) с котормы операция-->
 	                  <?php echo showAllAssetCategory();?>
 
-                      <button type="submit">Внести расход</button>
+                      <button class="btn btn-payment">Внести расход</button>
                     </div>
                 </form>
             </div>
@@ -79,7 +79,7 @@
                        <!-- внесение суммы прихода -->
                        <input type="number" step="0.01" name="payment-sum"></p>
 
-                        <button type="submit">Внести обмен/перевод</button>
+                        <button class="btn btn-payment">Внести обмен/перевод</button>
                     </p> 
 
             </div>

@@ -1,0 +1,28 @@
+.btn{
+    text-decoration: none; /* Убираем подчёркивание */
+    background: #8C959D; /* Серый цвет фона */
+    color: #fff; /* Белый цвет текста */
+    border-radius: 3px; /* Скругляем уголки */
+    border: 0;
+    cursor: pointer;
+}
+
+.btn:hover{
+    background-color: rgba(124, 124, 124, 0.603);
+}
+/* кнопка выхода из кабинета -  resources\views\cabinet\index.php */
+.div-exit{
+    text-align: right;
+    
+}
+
+.btn-exit-link{
+    display: inline-block; /* Строчно-блочный элемент */
+    padding: 1rem 1.5rem; /* Поля вокруг текста */ 
+}
+
+.btn-payment{
+    padding: 3px 4.5px;
+    /* color: #000000; */
+}
+   

@@ -8,7 +8,7 @@ function createPaymentController()
     // приходят данные из формы - resources\views\payment\formPayment.php
     $idPaymentCategory = $_POST['idPaymentCategory'];
     // проверяю сумму: больше нуля, 
-    echo $sumPayment       = $_POST['payment-sum'];
+    $sumPayment       = $_POST['payment-sum'];
     $assetCategoryId  = $_POST['assetCategoryId'];
     
     $sumPayment = validSumInput($_POST['payment-sum']);
@@ -41,7 +41,12 @@ function createPaymentController()
                     //
                     foreach($IncomeOrExpense as $findOnePayment){
                         // высчитываю сумму на которую надо будет скорректирвать остаток актива (asset) в creatAsset($db, $sumNew); строка 63
-                        $sumNew = addAmount($idPaymentCategory, $findLastAsset['asset_sum'], $sumPayment);
+                        if($findLastAsset['asset_sum'] >= $sumPayment ){
+                            $sumNew = addAmount($idPaymentCategory, $findLastAsset['asset_sum'], $sumPayment);
+                            // внесение нового остатка в Asset
+                            $queryAsset = creatAsset($db, $sumNew, $assetCategoryId);
+                        }
+                     
                     }
                 } 
             }
@@ -52,33 +57,35 @@ function createPaymentController()
                 if($idPaymentCategory == 1){ // елси $idPaymentCategory == 1, то это категория "приход"
                     //$sumNew = $sumPayment;// это первая сумма актива
                     $sumNew = addAmount($idPaymentCategory, $findLastAsset['asset_sum'], $sumPayment); 
-                    
+                     // внесение нового остатка в Asset
+                    $queryAsset = creatAsset($db, $sumNew, $assetCategoryId);
                 }
                 if($idPaymentCategory == 2){ 
                     // елси $idPaymentCategory == 2, то это категория "расход"
                     session_start();
                     // если в активах нет записи, то нелья сделать расход - выводится надпись , что надо внести сначала приход
                     $_SESSION['comment'] = 1;         
-                    header("Location: main");
+                    header("Location: cabinet");
                 }   
             }
              
-            // внесение нового остатка в Asset
-            $queryAsset = creatAsset($db, $sumNew, $assetCategoryId);
+           
                 
-             //
+             $queryAsset = false;
              if($queryAsset == false or $queryPayment == false){ 
                 //
                  throw new Exception('Транзакция не прошла!'); 
              } 
              
             mysqli_commit($db);
-            header("Location: main") ? $queryPayment == true and $queryAsset == true: header("Location: main");
+            header("Location: cabinet") ? $queryPayment == true and $queryAsset == true: header("Location: cabinet");
      
          }catch (Exception $e) {
              echo $e->getMessage();
              mysqli_rollback($db);
-             
+             session_start();
+             $_SESSION['comment'] = 5;
+             header("Location: cabinet");
          }  
     }
     
@@ -86,7 +93,7 @@ function createPaymentController()
     if(empty($sumPayment) or empty($idPaymentCategory)){
        session_start();
        $_SESSION['comment'] = 2;
-        header("Location: main");
+        header("Location: cabinet");
     }
 }
 
@@ -127,7 +134,7 @@ function updatePaymentController()
     $updateAsset = updateAsset($db, $difference, $findAllAssetCategory);
             
     mysqli_commit($db);
-    header("Location: main") ? $updateAsset == true and $updatePayment == true: header("Location: main");
+    header("Location: cabinet") ? $updateAsset == true and $updatePayment == true: header("Location: cabinet");
     } catch (Exception $e) {
             echo $e->getMessage();
             mysqli_rollback($db);
@@ -167,7 +174,7 @@ function deleteOnePaymentController()
              } 
              
              mysqli_commit($db);
-             header("Location: main") ? $deleteOnePayment == true and $updateAsset == true: header("Location: main");
+             header("Location: cabinet") ? $deleteOnePayment == true and $updateAsset == true: header("Location: cabinet");
      
          }catch (Exception $e) {
              echo $e->getMessage();

@@ -18,7 +18,6 @@ function validSumInput($sum)
 function MoreThanNull($sum)
 {
     if($sum > 0){
-      
     return $sum;
    }else{
     session_start();

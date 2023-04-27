@@ -9,8 +9,6 @@ function getUri()
 
 function Router()
 {
-    echo $_SERVER['REQUEST_URI'];
-
     $routes = routes();
     $getUri = getUri();
     

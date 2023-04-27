@@ -8,6 +8,7 @@ function routes()
         'editpayment/([0-9]+)'=>'editPayment/$1',
         'updatepayment'=>'updatePayment',
         'deletepayment'=>'deleteOnePayment',
+        'cabinet'=>'cabinet',
         ''=>'Main'
     ];
 }

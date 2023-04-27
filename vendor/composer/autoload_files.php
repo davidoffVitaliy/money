@@ -14,6 +14,7 @@ return array(
     '1046bb0674ed646780ba4b10f66afb83' => $baseDir . '/app/Comment.php',
     '3b5c05b459be2ddb97e47b64558201d1' => $baseDir . '/app/Resources.php',
     '72cdf8607a8b7d0b571a2d69367412ed' => $baseDir . '/app/Controllers/MainController.php',
+    '9ddf72f34019d19ec50eb1c328025cdb' => $baseDir . '/app/Controllers/CabinetController.php',
     'bec3d967b8e70736399ea3f52f79bac4' => $baseDir . '/app/Controllers/PaymentController.php',
     '06c4e7dbeae41b6e06aa5faa7b787f30' => $baseDir . '/app/Models/Asset.php',
     '1966a612c3c754d2a04d3191b13633fc' => $baseDir . '/app/Models/Payment.php',

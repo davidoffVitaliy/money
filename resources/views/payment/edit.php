@@ -1,5 +1,5 @@
 <div>
-    <a href="/money2/main">На главную</a>
+    <a href="/money2/cabinet">На главную</a>
 </div>
 
 
