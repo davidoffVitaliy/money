@@ -10,7 +10,7 @@ function createPaymentController()
     // проверяю сумму: больше нуля, 
     $sumPayment       = $_POST['payment-sum'];
     $assetCategoryId  = $_POST['assetCategoryId'];
-    $date = $_POST['date'];
+    $datePayment = $_POST['date'];   
     
     $sumPayment = validSumInput($_POST['payment-sum']);
     // если переданы данные с полей формы
