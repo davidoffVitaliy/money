@@ -2,12 +2,12 @@
     // файл (модель) работы с платежами (payment)
 
     // создаю запись платежа в базу - приход
-    function createPayment($db, $sumPayment, $idPaymentCategory, $assetCategoryId) 
+    function createPayment($db, $sumPayment, $idPaymentCategory, $assetCategoryId, $datePayment) 
     {        
         $queryPayment = mysqli_query($db, "INSERT INTO payment 
-            (payment_sum, payment_category_id, asset_category_id) 
+            (payment_sum, payment_category_id, asset_category_id, payment_date) 
             VALUES 
-            ('$sumPayment', '$idPaymentCategory', '$assetCategoryId')");
+            ('$sumPayment', '$idPaymentCategory', '$assetCategoryId', '$datePayment')");
             
         return true ? $queryPayment == true : false;
     }

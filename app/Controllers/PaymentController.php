@@ -10,7 +10,8 @@ function createPaymentController()
     // проверяю сумму: больше нуля, 
     $sumPayment       = $_POST['payment-sum'];
     $assetCategoryId  = $_POST['assetCategoryId'];
-    $datePayment = $_POST['date'];   
+    // дата платежа
+    $datePayment      = $_POST['date'];   
     
     $sumPayment = validSumInput($_POST['payment-sum']);
     // если переданы данные с полей формы
@@ -23,7 +24,7 @@ function createPaymentController()
         try {
         
             // запись платежа в базу (в таблицу Payment)
-            $queryPayment = createPayment($db, $sumPayment, $idPaymentCategory, $assetCategoryId);
+            $queryPayment = createPayment($db, $sumPayment, $idPaymentCategory, $assetCategoryId, $datePayment);
 
             // определяю - платеж приход или расход
             $IncomeOrExpense = findOnePaymentIncomeOrExpenseCategory($idPaymentCategory);
