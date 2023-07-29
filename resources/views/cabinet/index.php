@@ -3,6 +3,7 @@ session_start();
 ?>
 <link rel="stylesheet" href="/money2/resources/css/btn.css">
 <h3>Проект готов на 10% от запланированного</h3>
+<a href="https://github.com/davidoffVitaliy/money" target="_blanc">https://github.com/davidoffVitaliy/money</a>
 <div class="div-exit">
   <button class="btn btn-exit-link" onclick="document.location='/money2/main'">Выход</button>
 </div>
@@ -33,8 +34,10 @@ foreach(findAllAssetCategory() as $findAllAssetCategory){
 	<caption>Платежи</caption>
 	<colgroup>
 		<col width="5%">
-		<col width="45%">
-		<col width="10%">
+		<col tidth="5%">
+		<col width="40%">
+		<col width="5%">
+		<col width="5%">
 		<col width="10%">
 		<col width="20%">
 		<col width="10%">
@@ -42,8 +45,11 @@ foreach(findAllAssetCategory() as $findAllAssetCategory){
 	<thead>    
 		<tr>
 			<th>id</th>
+			<th>Дата</th>
 			<th>Вид платежа</th>
-			<th>сумма платежа</th>
+			<th>сумма прихода</th>
+			<!--<th>Приход</th>-->
+			<th>Расход</th>
 			<th>счёт</th>
 			<th>редактировать</th>
 			<th>удалить</th>
@@ -53,9 +59,15 @@ foreach(findAllAssetCategory() as $findAllAssetCategory){
 		<!-- Из app\Controllers\CabinetController.php   @CabinetController  строка-4-22   -->
 	<?php foreach($findAllPayment as $transaction){ ?>
 		<tr>
-			<th><?php echo $transaction['idpayment']; ?></div>
+			<th><?php echo $transaction['idpayment']; ?></th>
+			<td><?php echo $transaction['payment_date']; ?></td>
 			<td><?php echo $transaction['payment_category_name']; ?></td>
-			<td><?php echo $transaction['payment_sum'] ?></td>
+			<td><?php if($transaction['payment_category_idpayment_category'] == 1){ ?>
+			<?php echo $transaction['payment_sum'] ?>
+			<?php } ?></td>
+			<td><?php if($transaction['payment_category_idpayment_category'] == 2){ ?>
+			<?php echo $transaction['payment_sum'] ?>
+			<?php } ?></td>
 			<td><?php echo $transaction['asset_category_name'] ?></td>
 			<td><a class="update" href="editpayment/<?php echo $transaction['idpayment']; ?>" >редактировать</a></td>
 			<td>
@@ -74,7 +86,9 @@ foreach(findAllAssetCategory() as $findAllAssetCategory){
 	<tfoot>
 		<tr>
 			<th>#</th>
+			<th></th>
 			<th>sum</th>
+			<th> - </th>
 			<th> - </th>
 			<th> - </th>
 			<th> - </th>
