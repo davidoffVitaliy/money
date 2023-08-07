@@ -3,7 +3,7 @@
     <div class="tab">
     <button class="tablinks" onclick="openCity(event, 'Income')">Приход</button>
     <button class="tablinks" onclick="openCity(event, 'expense')" id="defaultOpen">Расход</button>
-    <button class="tablinks" onclick="openCity(event, 'exchange')">Обмен</button>
+    <button class="tablinks" onclick="openCity(event, 'exchange')">Перевод (Обмен)</button>
     </div>
     
     <!-- блок внесения операций (payment) -->
