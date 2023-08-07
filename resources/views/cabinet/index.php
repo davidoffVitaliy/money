@@ -16,6 +16,9 @@ if(isset($_SESSION['comment'])){
 	echo '<p>'.comment($_SESSION['comment']).'</p>';
 	session_destroy();
 }
+
+if(isset($_SESSION['date']))
+echo $_SESSION['date'];
 ?>
 </div>
 <div class="top-block">

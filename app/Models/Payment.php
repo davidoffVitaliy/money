@@ -5,7 +5,7 @@
     function createPayment($db, $sumPayment, $idPaymentCategory, $assetCategoryId, $datePayment) 
     {        
         $queryPayment = mysqli_query($db, "INSERT INTO payment 
-            (payment_sum, payment_category_id, asset_category_id, payment_date) 
+            (payment_sum, payment_category_id, asset_category_id, payment_date)   
             VALUES 
             ('$sumPayment', '$idPaymentCategory', '$assetCategoryId', '$datePayment')");
             

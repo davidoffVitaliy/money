@@ -12,7 +12,7 @@ function createPaymentController()
     $assetCategoryId  = $_POST['assetCategoryId'];
     // дата платежа
     $datePayment      = $_POST['date'];   
-    
+    $_SESSION['date'] = $datePayment;
     $sumPayment = validSumInput($_POST['payment-sum']);
     // если переданы данные с полей формы
     if($sumPayment == true and !empty($idPaymentCategory and !empty($assetCategoryId))){
@@ -73,7 +73,7 @@ function createPaymentController()
              
            
                 
-             $queryAsset = false;
+             //$queryAsset = false;
              if($queryAsset == false or $queryPayment == false){ 
                 //
                  throw new Exception('Транзакция не прошла!'); 
@@ -95,6 +95,7 @@ function createPaymentController()
     if(empty($sumPayment) or empty($idPaymentCategory)){
        session_start();
        $_SESSION['comment'] = 2;
+       $_SESSION['date'] = $datePayment;
         header("Location: cabinet");
     }
 }

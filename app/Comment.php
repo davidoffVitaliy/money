@@ -21,6 +21,9 @@ function comment($id)
         case 5:
             return "сумма расхода не может быть больше остатка";
             break;
+        case 6:
+            return "Не известная ошибка";
+            break;
     }
     
 }
