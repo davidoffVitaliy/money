@@ -37,8 +37,8 @@ foreach(findAllAssetCategory() as $findAllAssetCategory){
 	<caption>Платежи</caption>
 	<colgroup>
 		<col width="5%">
-		<col tidth="5%">
-		<col width="40%">
+		<col tidth="10%">
+		<col width="35%">
 		<col width="5%">
 		<col width="5%">
 		<col width="10%">
