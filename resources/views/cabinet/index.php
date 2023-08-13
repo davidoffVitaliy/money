@@ -3,6 +3,7 @@ session_start();
 ?>
 <link rel="stylesheet" href="/money2/resources/css/btn.css">
 <h3>Проект готов на 10% от запланированного</h3>
+<h4>В планах - создать обмен</h4>
 <a href="https://github.com/davidoffVitaliy/money" target="_blanc">https://github.com/davidoffVitaliy/money</a>
 <div class="div-exit">
   <button class="btn btn-exit-link" onclick="document.location='/money2/main'">Выход</button>
@@ -15,10 +16,10 @@ if(isset($_SESSION['comment'])){
 	// вывожу ошибку запаолнения полей платежа если они есть
 	echo '<p>'.comment($_SESSION['comment']).'</p>';
 	session_destroy();
+	header("Refresh: 1");
 }
+//echo $_SESSION['test'];
 
-if(isset($_SESSION['date']))
-echo $_SESSION['date'];
 ?>
 </div>
 <div class="top-block">

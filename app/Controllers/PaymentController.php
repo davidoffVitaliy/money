@@ -5,7 +5,8 @@
 function createPaymentController()
 {
    
-    // приходят данные из формы - resources\views\payment\formPayment.php
+    // приходят данные из формы - resources\views\payment\formPayment.php  стр.- 10-60
+    // категория платежа
     $idPaymentCategory = $_POST['idPaymentCategory'];
     // проверяю сумму: больше нуля, 
     $sumPayment       = $_POST['payment-sum'];
@@ -16,7 +17,7 @@ function createPaymentController()
     $sumPayment = validSumInput($_POST['payment-sum']);
     // если переданы данные с полей формы
     if($sumPayment == true and !empty($idPaymentCategory and !empty($assetCategoryId))){
-        
+         
         $db = db();
         // начало транзакции 
         mysqli_begin_transaction($db);    
@@ -31,7 +32,7 @@ function createPaymentController()
             foreach($IncomeOrExpense as $findOnePayment){
                 $idPaymentCategory = $findOnePayment['payment_category_idpayment_category'];
             }
-
+            
              // select  суммы остатка актива
              $findLastAssets = findLastAsset($assetCategoryId);
              // есть ли уже записи в таблице активов
@@ -43,12 +44,31 @@ function createPaymentController()
                     //
                     foreach($IncomeOrExpense as $findOnePayment){
                         // высчитываю сумму на которую надо будет скорректирвать остаток актива (asset) в creatAsset($db, $sumNew); строка 63
+                        // если операция приход - надо написать !!!!!!!!!!!!!!
+                        // !!!!!!!!!  если операция расход !!!!!!!!!!!!
+                        // если сумма остатка на счёту больше или равна присланной сумме из формы
+                        if($idPaymentCategory == 2){
                         if($findLastAsset['asset_sum'] >= $sumPayment ){
+                            //$ostatokAktiv = $findLastAsset['asset_sum'];
+                            //$summfPrihod = $sumPayment;
+                            // 
                             $sumNew = addAmount($idPaymentCategory, $findLastAsset['asset_sum'], $sumPayment);
                             // внесение нового остатка в Asset
                             $queryAsset = creatAsset($db, $sumNew, $assetCategoryId);
+                            
+                        }else{
+                            session_start();
+                            $_SESSION['comment'] = 5;
                         }
-                     
+                        }
+
+                        if($idPaymentCategory == 1){
+                                // 
+                                $sumNew = addAmount($idPaymentCategory, $findLastAsset['asset_sum'], $sumPayment);
+                                // внесение нового остатка в Asset
+                                $queryAsset = creatAsset($db, $sumNew, $assetCategoryId);
+                            
+                            }
                     }
                 } 
             }
@@ -72,9 +92,7 @@ function createPaymentController()
             }
              
            
-                
-             //$queryAsset = false;
-             if($queryAsset == false or $queryPayment == false){ 
+            if($queryAsset == false or $queryPayment == false){ 
                 //
                  throw new Exception('Транзакция не прошла!'); 
              } 
@@ -83,10 +101,11 @@ function createPaymentController()
             header("Location: cabinet") ? $queryPayment == true and $queryAsset == true: header("Location: cabinet");
      
          }catch (Exception $e) {
-             echo $e->getMessage();
+             $e->getMessage();
              mysqli_rollback($db);
              session_start();
-             $_SESSION['comment'] = 5;
+             ///$_SESSION['comment'] = 6;
+            // $_SESSION['test'] = $ostatokAktiv;
              header("Location: cabinet");
          }  
     }
@@ -95,7 +114,7 @@ function createPaymentController()
     if(empty($sumPayment) or empty($idPaymentCategory)){
        session_start();
        $_SESSION['comment'] = 2;
-       $_SESSION['date'] = $datePayment;
+       $_SESSION['date'] = $idPaymentCategory;
         header("Location: cabinet");
     }
 }
