@@ -36,10 +36,12 @@
         WHERE idpayment = '$idPayment'");
     }
 
-    function updatePayment($db, $payment_new, $idPayment)
+    function updatePayment($db, $payment_new, $idPayment, $payment_date)
     {
         $queryPayment = mysqli_query($db, "UPDATE payment 
-        SET `payment_sum` = '$payment_new'  WHERE `idpayment` = '$idPayment'");
+        SET `payment_sum` = '$payment_new',
+        `payment_date` = '$payment_date'  
+        WHERE `idpayment` = '$idPayment'");
 
         return true ? $queryPayment == true : false;
     }

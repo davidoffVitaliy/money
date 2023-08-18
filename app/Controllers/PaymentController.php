@@ -140,6 +140,7 @@ function updatePaymentController()
     $payment_old       = $_POST['payment_old'];// старое значение платежа
     $idPaymentCategory = $_POST['idincome_expense'];// вясняю - приход или расход
     $findAllAssetCategory = $_POST['asset_category_id'];
+    $payment_date = $_POST['payment_date']; // дата платежа
     
     // подключаюсь к базе данных
     $db = db(); 
@@ -148,7 +149,7 @@ function updatePaymentController()
 
     try {
     // 
-    $updatePayment = updatePayment($db, $payment_new, $idPayment);
+    $updatePayment = updatePayment($db, $payment_new, $idPayment, $payment_date);
 
     // нахожу сумму на которую надо скорректировать остаток актива
     echo $difference = difference($idPaymentCategory , $payment_new, $payment_old); 
