@@ -171,7 +171,7 @@ function deleteOnePaymentController()
     $idPayment         = $_POST['idpayment'];  // id payment на удаление
     $paymentSum        = $_POST['payment_sum']; // сумма удаленная (payment), на которую скорректирую актив
     $idPaymentCategory = $_POST['idincome_expense']; // приход или расход - что выяснить уменьшать или увеличивать сумму актива
-    $findAllAssetCategory = $_POST['asset_category_id'];
+    $findAllAssetCategory = $_POST['asset_category_id'];  // id актива
 
     if(!empty($idPayment and !empty($paymentSum) and $idPaymentCategory)){
         
@@ -183,7 +183,9 @@ function deleteOnePaymentController()
         mysqli_begin_transaction($db);    
         
         try {
-
+            // найти остаток по счёту
+            // findLastAsset($findAllAssetCategory)  // 1.найти остаток актива - ффорич 2. сравнить остаток актива с удаляемой суммой - актив должет быть равен или больше
+            // сравнить остаток и удаляемую сумму - если сумма будет меньше нуля (отрицательная), то отменять удаление и вывести уведомление
             // удаляю платеж
             $deleteOnePayment = deleteOnePayment($db, $idPayment);
             

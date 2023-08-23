@@ -3,8 +3,8 @@ session_start();
 ?>
 <link rel="stylesheet" href="/money2/resources/css/btn.css">
 <h3>Проект готов на 10% от запланированного</h3>
-<h4>Выводить список платежей по дате </h4>
-<h4>В планах - создать обмен</h4>
+<h4>создать обмен</h4>
+<h4>! если удаляю платёж - нужен пересчёт остатка</h4>
 <h4>Сделать первую страницу лендингом</h4>
 <a href="https://github.com/davidoffVitaliy/money" target="_blanc">https://github.com/davidoffVitaliy/money</a>
 <div class="div-exit">
