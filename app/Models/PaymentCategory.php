@@ -18,7 +18,12 @@ function findAllExpense()
 // достать категории платежей (payment) - для определения - "приход или расход"
 function findOnePaymentIncomeOrExpenseCategory($idPaymentCategory)
 {
-    return mysqli_query(db(), "SELECT * FROM payment_category WHERE idpayment_category = '$idPaymentCategory'");
+    $query = mysqli_query(db(), "SELECT * FROM payment_category WHERE idpayment_category = '$idPaymentCategory'");
+
+    foreach($query as $result){
+        $paymentCategory = $result['payment_category_idpayment_category'];
+    }
+    return $paymentCategory;
 }
 /* 
     function creat(){}- Создать одну сущность

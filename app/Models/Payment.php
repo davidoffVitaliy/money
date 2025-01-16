@@ -18,7 +18,7 @@
         return mysqli_query(db(), "SELECT * FROM payment AS p
         LEFT JOIN payment_category AS pc ON pc.idpayment_category = p.payment_category_id
         LEFT JOIN asset_category AS ac ON ac.idasset_category = p.asset_category_id
-        ORDER BY payment_date DESC");
+        ORDER BY payment_date DESC, idpayment DESC");
     } 
 
     //- найти одну категорвию, чтоб определить - она относиться к приходу или расходу

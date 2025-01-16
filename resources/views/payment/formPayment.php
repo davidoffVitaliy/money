@@ -7,11 +7,11 @@
     </div>
     
     <!-- блок внесения операций (payment) -->
-    <div class="income_expense_block">
-            <div id="Income" class="tabcontent">
+    <div class="income_expense_block"> 
+          <div id="Income" class="tabcontent">
             <h3>Приход</h3>
                 <!--- Форма отправляет данные для внесения прихода в - app\Controllers\PaymentController.php   @createPaymentController()--->
-                <form action="/money2/createpayment" method="POST">
+                <form action="/money2/createpayment" method="POST" id="myForm">
                     <p>
                         <label for="date">Дата платежа: </label>
                         <input type="date" id="date" name="date"/>
@@ -27,7 +27,7 @@
                     </select>
                     <!-- Выбор счёта(кошелька) с котормы операция-->
                     <?php
-	                echo showAllAssetCategory();
+	                    echo showAllAssetCategory();
                     ?>
                     <button class="btn btn-payment">Внести доход</button>
                 </form>
@@ -62,32 +62,49 @@
             <!--- Форма отправляет данные для внесения обмена/перевода со счёта на счёт в - app\Controllers\PaymentController.php   @createPaymentController()--->
             <div id="exchange" class="tabcontent">
             <h3>Обмен</h3>
-            
-                     <p>
+                <form action="/money2/exchange" method="POST"> 
+                    <p>
                         <label for="date">Дата платежа: </label>
                         <input type="date" id="date" name="date">
                     </p>
                         <!-- Выбор счёта(кошелька) с которого расход-->
                         расход
-	                 <p><?php echo showAllAssetCategory();?>
+	                 <p>
+                      <select name="assetCategoryIdSpending" >
+                        <option value="">Выбрать счёт</option>
+                          <?php  foreach(findAllAssetCategory() as $res){ ?>
+                        <option value="<?php echo $res['idasset_category']; ?>"> 
+                          <?php echo $res['asset_category_name']; ?>
+                        </option>
+                          <?php } ?> 
+                      </select>
+                                                  
                         <!-- внесение суммы расхода -->
-                       <input type="number" step="0.01" name="payment-sum"></p>
+                       <input type="number" step="0.01" name="payment-sum-spending">
+                     </p>
 
                         <!-- Выбор счёта(кошелька) на который приход-->
                         Приход
-	                <p><?php echo showAllAssetCategory();?>
+	                <p><select name="assetCategoryIdRevenue" >
+                        <option value="">Выбрать счёт</option>
+                          <?php  foreach(findAllAssetCategory() as $res){ ?>
+                        <option value="<?php echo $res['idasset_category']; ?>"> 
+                          <?php echo $res['asset_category_name']; ?>
+                        </option>
+                          <?php } ?> 
+                      </select>
                        <!-- внесение суммы прихода -->
-                       <input type="number" step="0.01" name="payment-sum"></p>
+                       <input type="number" step="0.01" name="payment-sum-revenue"></p>
 
                         <button class="btn btn-payment">Внести обмен/перевод</button>
                     </p> 
-
+                    </form>
             </div>
     </div>
     
 </div>
 
 
-<script src="/money2/resources/js/script.js">
+<script src="/resources/js/script.js">
     // обраборка форма 
 </script>

@@ -1,14 +1,14 @@
 <?php
 // корректироване суммы остатка актива (asset) при удалении или редактировании платежа (payment)
-function difference($idPaymentCategory, $SumFirst, $SumSecond)
+function difference($idPaymentCategory, $payment_new, $payment_old)
 {
     // сумма на которую надо будет скорректирвать остаток актива asset
     if($idPaymentCategory == 1){ // елси $idPaymentCategory == 1, то это категория "приход"
-        $differenceSum = $SumFirst - $SumSecond; // если скорректирована запись "приход", то от актива надо будет отнять
+        $differenceSum = $payment_new - $payment_old; // если скорректирована запись "приход", то от актива надо будет отнять
         return $differenceSum;
      }
      if($idPaymentCategory == 2){ // елси $idPaymentCategory == 2, то это категория "расход"
-      $differenceSum = $SumSecond - $SumFirst; // если скорректирована запись "расход", то к остатку актива надо будет прибавить эту сумму
+      $differenceSum = $payment_old - $payment_new; // если скорректирована запись "расход", то к остатку актива надо будет прибавить эту сумму
       return $differenceSum;
      }
 }

@@ -17,11 +17,14 @@ class ComposerStaticInit6209ba61edecbf7ec857bef1a6ccf449
         '72cdf8607a8b7d0b571a2d69367412ed' => __DIR__ . '/../..' . '/app/Controllers/MainController.php',
         '9ddf72f34019d19ec50eb1c328025cdb' => __DIR__ . '/../..' . '/app/Controllers/CabinetController.php',
         'bec3d967b8e70736399ea3f52f79bac4' => __DIR__ . '/../..' . '/app/Controllers/PaymentController.php',
+        'a22df1716c7fabb7db74efbce2ffe012' => __DIR__ . '/../..' . '/app/Controllers/ExchangeController.php',
         '06c4e7dbeae41b6e06aa5faa7b787f30' => __DIR__ . '/../..' . '/app/Models/Asset.php',
         '1966a612c3c754d2a04d3191b13633fc' => __DIR__ . '/../..' . '/app/Models/Payment.php',
         '8753bb4376469f4e77ecf736bfe160db' => __DIR__ . '/../..' . '/app/Models/PaymentCategory.php',
         'c4a60a302b3cb03484177ba6b088fa61' => __DIR__ . '/../..' . '/app/Models/AssetCategory.php',
         'dba2b6e26a8d6e33e3a2728a930e91d5' => __DIR__ . '/../..' . '/app/Valid.php',
+        'ae5278697e693b71652283698c9d02a5' => __DIR__ . '/../..' . '/app/Debug.php',
+        '8c03a3966a033d8f6bcce15226af0986' => __DIR__ . '/../..' . '/app/Models/Exchange.php',
     );
 
     public static $prefixLengthsPsr4 = array (

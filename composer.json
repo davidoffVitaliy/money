@@ -16,11 +16,14 @@
             "app/Controllers/MainController.php",
             "app/Controllers/CabinetController.php",
             "app/Controllers/PaymentController.php",
+            "app/Controllers/ExchangeController.php",  
             "app/Models/Asset.php",
             "app/Models/Payment.php",
             "app/Models/PaymentCategory.php",
             "app/Models/AssetCategory.php",
-            "app/Valid.php"
+            "app/Valid.php",
+            "app/Debug.php",
+            "app/Models/Exchange.php"
 
         ]
     },

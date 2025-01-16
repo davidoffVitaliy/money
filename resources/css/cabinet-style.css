@@ -1,0 +1,166 @@
+
+.b-wrapper{
+    display: flex;
+    flex-direction: column;
+    
+}
+/*strart header------------*/
+.b-header{
+    position: sticky;
+    top: 0;
+    padding: 10px;
+    background-color: #999999;
+}
+/*end header------------*/
+
+.b-main{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.b-top{
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    padding: 30px 30px 100px 30px;
+}
+
+.different{
+    border: 1px solid #555;
+}
+
+.b-form-payment{
+    min-width: 33vw;
+}
+
+.top-block{
+    display: flex; /*Задаем блочно-строчное отображение*/
+    flex-direction: column;
+    align-items:flex-start;
+    width: 430px;
+    padding: 10px;
+    border: 1px solid grey;
+}
+
+.block-asset{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    font-size: 28px;
+}
+/*---- start форма входа------*/
+/**/
+.table-wrapper{
+    display: flex;
+    width: 100%;
+    
+} 
+
+.table {
+	min-width: 50%;
+    width: 100vw;
+	border-collapse: collapse;
+	border: 1px solid #555;
+}
+
+.table caption {
+	padding: 10px;
+	color: #333;
+	font-size: 16px;
+	text-align: center;
+}
+
+.table th {
+	padding: 5px;
+	border: 1px solid #555;
+	font-weight: bold;
+	text-align: left;
+}
+.table td {
+	padding: 5px;
+	border: 1px solid #555;
+    max-width: 100px;
+    word-wrap: break-word;
+}
+.table thead th, .table thead td {
+	background: #f9f9f9;
+}
+.table tbody th, .table tbody td {
+	background: #fff;
+}
+.table tfoot th, .table tfoot td {
+	background: #f4f6ff;
+}
+
+
+
+
+.income_expense_block{
+    height: 160px;
+    margin-bottom: 50px;
+}
+
+/* Style the tab */
+.tab {
+    overflow: hidden;
+    border: 1px solid #ccc;
+    background-color: #f1f1f1;
+}
+
+/* Style the buttons inside the tab */
+.tab button {
+    background-color: inherit;
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 14px 16px;
+    transition: 0.3s;
+    font-size: 17px;
+}
+
+/* Change background color of buttons on hover */
+.tab button:hover {
+    background-color: #ddd;
+}
+
+/* Create an active/current tablink class */
+.tab button.active {
+    background-color: #ccc;
+}
+
+/* Style the tab content */
+.tabcontent {
+    
+    padding: 6px 12px;
+    border: 1px solid #ccc;
+    border-top: none;
+}
+
+/* конец оформления вкладок */
+/* ........................... */
+.update{
+    font-style: italic;
+    font-size: 12px;
+}
+/*-----------------------------------*/
+/*----------цифры остатка активов-----------*/
+
+
+button {
+    padding: 5px 10px;
+    margin: 0 2px;
+    border: none;
+    background-color: #999;
+    color: #333;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    background-color: #777;
+  }
+  
+  
+

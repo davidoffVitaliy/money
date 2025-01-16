@@ -13,14 +13,13 @@
     // Найти всё активы
     function findAllAsset()
     {
-        return mysqli_query(db(), "SELECT * FROM asset AS aORDER BY a.idasset DESC ");
+        return mysqli_query(db(), "SELECT * FROM asset AS ORDER BY a.idasset DESC ");
     } 
 
     //последний актив. остаток. все свойства актива (остаток актива - assets)
     function findLastAsset($findAllAssetCategory = null)
     {
-        $db = db();
-        $query = mysqli_query($db, "SELECT * FROM asset AS a 
+        $query = mysqli_query(db(), "SELECT * FROM asset AS a 
         LEFT JOIN asset_category AS ac ON ac.idasset_category = a.asset_category_id
         LEFT JOIN currency AS c ON c.idcurrency = ac.currency_idcurrency
         LEFT JOIN bank_cash AS bc ON bc.idbank_cash = ac.bank_cash_id
@@ -28,6 +27,24 @@
         ORDER BY a.idasset DESC LIMIT 1");
 
         return $query;
+    }
+
+    //Только сумма - нахожу один последний актив (остаток), только сумму
+    function findLastAssetOnlySum($findAllAssetCategory)
+    {
+        // запрос в базу - нахожу остаток
+        $query = findLastAsset($findAllAssetCategory);
+        $lastAsset = null;
+        //
+        foreach($query as $result){
+            $lastAsset = $result['asset_sum'];
+        }
+        // 
+        if(!empty($lastAsset)){
+        return $lastAsset;
+        }else{
+            return null;
+        }
     }
 
     // найти одину запись актива
@@ -39,14 +56,14 @@
     // редактирование актива (assets)
     function updateAsset($db, $difference, $findAllAssetCategory)
     {
-       foreach(findLastAsset($findAllAssetCategory) as $res){
-           $query = mysqli_query($db, 
-           "UPDATE asset
-           SET asset_sum = asset_sum + '$difference'
-           WHERE idasset = '".$res['idasset']."'");
-       }
+        foreach(findLastAsset($findAllAssetCategory) as $res){
+            $query = mysqli_query($db, 
+            "UPDATE asset
+            SET asset_sum = asset_sum + '$difference'
+            WHERE idasset = '".$res['idasset']."'");
+    }
 
-       return true ? $query == true : false;
+        return true ? $query == true : false;
     }
 
 /* 

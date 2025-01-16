@@ -19,12 +19,15 @@ function CabinetController()
 
         // все платежи  
         'findAllPayment' =>findAllPayment(), 
+
+        // все операции по обменам
+        'findAllExchange' =>findAllExchange(),
         
         // справочник категорий расхода
         'categoryPayment'=>$categoryPayment, 
-         ];
-         
-    $content = render('cabinet/index', $cont);
+        ];
 
+    $content = render('cabinet/index', $cont);
+    
     return render('Template', ['title'=>'cabinet Money', 'content'=>$content]);
 }

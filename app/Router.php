@@ -7,6 +7,7 @@ function getUri()
     return substr($result, 7);
 }
 
+
 function Router()
 {
     $routes = routes();
@@ -19,21 +20,21 @@ function Router()
             $preg = preg_replace("~$uriPatern~", $path, $getUri);
            
             
-        $array = explode('/', $preg);   
-      
-      
-         $ac = array_shift($array);
+            $array = explode('/', $preg);   
+        
+        
+            $ac = array_shift($array);
 
-         $param = array_shift($array);
+            $param = array_shift($array);
+            
+            $action = $ac.'Controller';
+            
         
-         $action = $ac.'Controller';
-        
-       
-        return $action($param);
-        if($action != null){
-        break;
-    }
-    }
+            return $action($param);
+            if($action != null){
+            break;
+            }
+        }
 }
 }
 

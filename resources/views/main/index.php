@@ -1,23 +1,23 @@
-<link rel="stylesheet" href="/money2/resources/css/form-authorization.css">
-<!-- 
--->
-
+<head>
+    <link rel="stylesheet" href="/resources/css/main.css">
+</head>
 <body>
-  <div class="ribbon"></div>
-  <div class="login">
-  <h1>Учёт финансов</h1>
-  <p>Зайди и понажимай</p>
-  <form action="/money2/cabinet" method="POST">
-    <div class="input">
-      <!-- <div class="blockinput">
-        <i class="icon-envelope-alt"></i><input type="mail" placeholder="Email">
-      </div>
-      <div class="blockinput">
-        <i class="icon-unlock"></i><input type="password" placeholder="Password">
-      </div> -->
-    </div>
-    <button>Войти</button>
-  </form>
-  </div>
-</body>
+    <div class="b-wrapper">
+        <header class="b-header">
+            <a class="link-to-cabineet" href="/money2/cabinet">
+                <div class="b-btn-cabinet">
+                    Деньги
+                </div>
+            </a>
+        </header>
+        <main class="b-main">
+            <div class="b-main-one">
+                Приложение для учёта денег
+            </div>
+        </main>
+        <footer class="b-footer">footer
 
+        </footer>
+    </div>
+</body>
+</html>

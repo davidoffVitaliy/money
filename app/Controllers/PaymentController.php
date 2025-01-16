@@ -2,23 +2,25 @@
 // файл - контроллер платежей
 
 // внести платеж 
+
+
+
 function createPaymentController()
 {
-   
-    // приходят данные из формы - resources\views\payment\formPayment.php  стр.- 10-60
+    //// приходят данные из формы - resources\views\payment\formPayment.php  стр.- 10-60
     // категория платежа
-    $idPaymentCategory = $_POST['idPaymentCategory'];
+    $idPaymentCategory = $_POST['idPaymentCategory'];   
     // проверяю сумму: больше нуля, 
-    $sumPayment       = $_POST['payment-sum'];
-    $assetCategoryId  = $_POST['assetCategoryId'];
+    $sumPayment        = validSumInput($_POST['payment-sum']);
+    // категория актива, остаток которого надо будет корректировать
+    $assetCategoryId   = $_POST['assetCategoryId'];
     // дата платежа
-    $datePayment      = $_POST['date'];   
-    $_SESSION['date'] = $datePayment;
-    $sumPayment = validSumInput($_POST['payment-sum']);
+    $datePayment       = $_POST['date'];  
+    
     // если переданы данные с полей формы
-    if($sumPayment == true and !empty($idPaymentCategory and !empty($assetCategoryId))){
-         
+    if(isset($idPaymentCategory) and isset($assetCategoryId) and isset($sumPayment) and isset($datePayment)){
         $db = db();
+        
         // начало транзакции 
         mysqli_begin_transaction($db);    
 
@@ -26,59 +28,44 @@ function createPaymentController()
         
             // запись платежа в базу (в таблицу Payment)
             $queryPayment = createPayment($db, $sumPayment, $idPaymentCategory, $assetCategoryId, $datePayment);
-
-            // определяю - платеж приход или расход
-            $IncomeOrExpense = findOnePaymentIncomeOrExpenseCategory($idPaymentCategory);
-            foreach($IncomeOrExpense as $findOnePayment){
-                $idPaymentCategory = $findOnePayment['payment_category_idpayment_category'];
-            }
+            // определяю - платеж приход или расход - запрос в базу
+            $idPaymentCategory = findOnePaymentIncomeOrExpenseCategory($idPaymentCategory);
             
-             // select  суммы остатка актива
-             $findLastAssets = findLastAsset($assetCategoryId);
-             // есть ли уже записи в таблице активов
-             $row_cnt = mysqli_num_rows($findLastAssets);
+             // select  суммы остатка актива - только сумма
+            $lastAsset = findLastAssetOnlySum($assetCategoryId); 
+            
              // если запись в активах(asset) уже есть 
-            if($row_cnt !== 0){
-                //
-                foreach($findLastAssets as $findLastAsset){
-                    //
-                    foreach($IncomeOrExpense as $findOnePayment){
-                        // высчитываю сумму на которую надо будет скорректирвать остаток актива (asset) в creatAsset($db, $sumNew); строка 63
-                        // если операция приход - надо написать !!!!!!!!!!!!!!
-                        // !!!!!!!!!  если операция расход !!!!!!!!!!!!
-                        // если сумма остатка на счёту больше или равна присланной сумме из формы
+            if($lastAsset !=null){
+                        // если расход
                         if($idPaymentCategory == 2){
-                        if($findLastAsset['asset_sum'] >= $sumPayment ){
-                            //$ostatokAktiv = $findLastAsset['asset_sum'];
-                            //$summfPrihod = $sumPayment;
-                            // 
-                            $sumNew = addAmount($idPaymentCategory, $findLastAsset['asset_sum'], $sumPayment);
-                            // внесение нового остатка в Asset
-                            $queryAsset = creatAsset($db, $sumNew, $assetCategoryId);
-                            
-                        }else{
-                            session_start();
-                            $_SESSION['comment'] = 5;
-                        }
-                        }
-
-                        if($idPaymentCategory == 1){
-                                // 
-                                $sumNew = addAmount($idPaymentCategory, $findLastAsset['asset_sum'], $sumPayment);
+                            // если расход больше или равен остатку, тогда вношу ... отрицательное значение не допускается
+                            if($lastAsset >= $sumPayment ){
+                                // нахожу новый остаток актива, чтоб внести в таблицу asset
+                                $sumNew = addAmount($idPaymentCategory, $lastAsset, $sumPayment);
                                 // внесение нового остатка в Asset
                                 $queryAsset = creatAsset($db, $sumNew, $assetCategoryId);
-                            
+                                
+                            }else{
+                                session_start();
+                                $_SESSION['comment'] = 5;
+                                header("Location: cabinet");
                             }
-                    }
-                } 
+                        }
+                        // если приход
+                        if($idPaymentCategory == 1){
+                                // нахожу новый остаток актива, чтоб внести в таблицу asset
+                                $sumNew = addAmount($idPaymentCategory, $lastAsset, $sumPayment);
+                                // внесение нового остатка в Asset
+                                $queryAsset = creatAsset($db, $sumNew, $assetCategoryId);
+                            }
             }
             
              // если в активах ещё нет записи, то  
-            if($row_cnt == 0){ 
+            if($lastAsset == null){ 
                 // определяю к какой группе платеж относиться - приход или расход       
                 if($idPaymentCategory == 1){ // елси $idPaymentCategory == 1, то это категория "приход"
                     //$sumNew = $sumPayment;// это первая сумма актива
-                    $sumNew = addAmount($idPaymentCategory, $findLastAsset['asset_sum'], $sumPayment); 
+                    $sumNew = addAmount($idPaymentCategory, $lastAsset, $sumPayment); 
                      // внесение нового остатка в Asset
                     $queryAsset = creatAsset($db, $sumNew, $assetCategoryId);
                 }
@@ -90,43 +77,39 @@ function createPaymentController()
                     header("Location: cabinet");
                 }   
             }
-             
-           
+            // если что то не внеслось, то отменяю транзакцию
             if($queryAsset == false or $queryPayment == false){ 
                 //
-                 throw new Exception('Транзакция не прошла!'); 
-             } 
-             
+            throw new Exception('Транзакция не прошла!'); 
+            } 
             mysqli_commit($db);
-            header("Location: cabinet") ? $queryPayment == true and $queryAsset == true: header("Location: cabinet");
-     
-         }catch (Exception $e) {
-             $e->getMessage();
-             mysqli_rollback($db);
-             session_start();
-             ///$_SESSION['comment'] = 6;
-            // $_SESSION['test'] = $ostatokAktiv;
-             header("Location: cabinet");
-         }  
+            header("Location: cabinet") ? $queryPayment == true and $queryAsset == true: header("Location: cabinet");      
+        }catch (Exception $e) {
+            $e->getMessage();
+            mysqli_rollback($db);
+            session_start();
+            //  не известная ошибка
+            $_SESSION['comment'] = 6;
+            header("Location: cabinet");
+        }  
     }
-    
-    // если не все поля формы заполнены
-    if(empty($sumPayment) or empty($idPaymentCategory)){
-       session_start();
-       $_SESSION['comment'] = 2;
-       $_SESSION['date'] = $idPaymentCategory;
+    if(empty($idPaymentCategory) or empty($assetCategoryId) or empty($sumPayment) or empty($datePayment)){
+         // если не все поля формы заполнены
+        session_start();
+        $_SESSION['comment'] = 2;
         header("Location: cabinet");
-    }
+    }  
 }
 
 // вывести файл редактирования платежа
 function editPaymentController($idPayment)
 {
+    
     $cont = [
         // сумма выбраного платежа для внесения в форму для редактирования
-         'findOneIdPayment'=>findOneIdPayment($idPayment)
-         ];
-         
+        'findOneIdPayment'=>findOneIdPayment($idPayment)
+        ];
+
     $content = render('payment/edit', $cont);
     return render('Template', ['title'=>'Редактирование платежа', 'content'=>$content]);
 }
@@ -135,26 +118,46 @@ function editPaymentController($idPayment)
 function updatePaymentController()
 {
     // из формы - resources\views\payment\edit.php
-    $idPayment         = $_POST['idpayment'];// id редактируемого платежа idpayment
-    $payment_new       = $_POST['payment'];// новая сумма платежа  
-    $payment_old       = $_POST['payment_old'];// старое значение платежа
-    $idPaymentCategory = $_POST['idincome_expense'];// вясняю - приход или расход
-    $findAllAssetCategory = $_POST['asset_category_id'];
-    $payment_date = $_POST['payment_date']; // дата платежа
+    $idPayment           = $_POST['idpayment'];// id редактируемого платежа idpayment
+    $payment_new         = validSumInput($_POST['payment']);// новая сумма платежа  
+    $payment_old         = $_POST['payment_old'];// старое значение платежа
+    $idPaymentCategory   = $_POST['idincome_expense'];// вясняю - приход или расход
+    $findIdAssetCategory = $_POST['asset_category_id'];
+    $payment_date        = $_POST['payment_date']; // дата платежа
     
     // подключаюсь к базе данных
-    $db = db(); 
-
+    $db = db();
+    
     mysqli_begin_transaction($db);
 
     try {
-    // 
-    $updatePayment = updatePayment($db, $payment_new, $idPayment, $payment_date);
-
+    
     // нахожу сумму на которую надо скорректировать остаток актива
-    echo $difference = difference($idPaymentCategory , $payment_new, $payment_old); 
-     // корректирую остаток актива (assset)  
-    $updateAsset = updateAsset($db, $difference, $findAllAssetCategory);
+    $difference = difference($idPaymentCategory , $payment_new, $payment_old); 
+    
+    if($idPaymentCategory == 2){ // если редактируется расход
+        
+        $lastAsset = findLastAssetOnlySum($findIdAssetCategory); //остаток актива
+        // если остаток актива больше или равна $difference, то вносится, если нет, то выводится ошибка - не может быть отрицательное значение
+        if($lastAsset + $difference >= 0){
+            // редактирую платёж
+            $updatePayment = updatePayment($db, $payment_new, $idPayment, $payment_date);
+            // корректирую остаток актива (assset)  
+            $updateAsset = updateAsset($db, $difference, $findIdAssetCategory);
+        }else{
+            // комент - не может быть отрицательного значения
+            session_start();
+            $_SESSION['comment'] = 5;
+            header("Location: cabinet");
+        }
+    }
+        if($idPaymentCategory == 1){ // если редактируется приход
+            // редактирую платёж
+            $updatePayment = updatePayment($db, $payment_new, $idPayment, $payment_date);
+            // редактирую актив
+            $updateAsset = updateAsset($db, $difference, $findIdAssetCategory);
+    }
+     
             
     mysqli_commit($db);
     header("Location: cabinet") ? $updateAsset == true and $updatePayment == true: header("Location: cabinet");
@@ -168,11 +171,12 @@ function updatePaymentController()
 function deleteOnePaymentController()
 {
     // получаю из формы \resources\views\main\index.php  строки-46-59
-    $idPayment         = $_POST['idpayment'];  // id payment на удаление
-    $paymentSum        = $_POST['payment_sum']; // сумма удаленная (payment), на которую скорректирую актив
-    $idPaymentCategory = $_POST['idincome_expense']; // приход или расход - что выяснить уменьшать или увеличивать сумму актива
-    $findAllAssetCategory = $_POST['asset_category_id'];  // id актива
-
+    $idPayment           = $_POST['idpayment'];  // id payment на удаление
+    $paymentSum          = $_POST['payment_sum']; // сумма удаленная (payment), на которую скорректирую актив
+    $idPaymentCategory   = $_POST['idincome_expense']; // приход или расход - что выяснить уменьшать или увеличивать сумму актива
+    $findIdAssetCategory = $_POST['asset_category_id'];  // id актива
+    session_start();
+    $_SESSION['debug'] = $paymentSum;
     if(!empty($idPayment and !empty($paymentSum) and $idPaymentCategory)){
         
         $db = db();
@@ -183,29 +187,42 @@ function deleteOnePaymentController()
         mysqli_begin_transaction($db);    
         
         try {
-            // найти остаток по счёту
-            // findLastAsset($findAllAssetCategory)  // 1.найти остаток актива - ффорич 2. сравнить остаток актива с удаляемой суммой - актив должет быть равен или больше
-            // сравнить остаток и удаляемую сумму - если сумма будет меньше нуля (отрицательная), то отменять удаление и вывести уведомление
-            // удаляю платеж
-            $deleteOnePayment = deleteOnePayment($db, $idPayment);
+            // если удаляется приход
+            if($idPaymentCategory == 1){
+                $lastAsset = findLastAssetOnlySum($findIdAssetCategory); // 1.найти остаток актива 
+                if($lastAsset - $paymentSum >= 0){ //если удаляемый приход не больше остатка - остаток не может быть отрицательным
+                    // удаляю платеж
+                    $deleteOnePayment = deleteOnePayment($db, $idPayment);
+                    // коррекрирую остаток актива (asset) на сумму удаленного платежа
+                    $updateAsset = updateAsset($db, $difference, $findIdAssetCategory); 
+                }else{
+                    session_start();
+                    $_SESSION['comment'] = 5; // коментарий - "сумма не может быть отрицательной"
+                    header("Location: cabinet");
+                }
+            }
             
-            // коррекрирую остаток актива (asset) на сумму удаленного платежа
-            $updateAsset = updateAsset($db, $difference, $findAllAssetCategory); 
-         
-             //
-             if($deleteOnePayment == false or $updateAsset == false){ 
-                
-                 throw new Exception('Удаление не состояловь!'); 
-             } 
-             
-             mysqli_commit($db);
-             header("Location: cabinet") ? $deleteOnePayment == true and $updateAsset == true: header("Location: cabinet");
-     
-         }catch (Exception $e) {
-             echo $e->getMessage();
-             mysqli_rollback($db);
-             
-         }  
+            // елси удаляется расход
+            if($idPaymentCategory == 2){
+                // удаляю платеж
+                $deleteOnePayment = deleteOnePayment($db, $idPayment);
+                // коррекрирую остаток актива (asset) на сумму удаленного платежа
+                $updateAsset = updateAsset($db, $difference, $findIdAssetCategory); 
+            }
+            
+             // если что то не внеслось
+            if($deleteOnePayment == false or $updateAsset == false){ 
+                throw new Exception('Удаление не состояловь!'); 
+            } 
+            
+            mysqli_commit($db);
+            header("Location: cabinet") ? $deleteOnePayment == true and $updateAsset == true: header("Location: cabinet");
+    
+        }catch (Exception $e) {
+            echo $e->getMessage();
+            mysqli_rollback($db); 
+        }  
     }
 } 
- 
+
+

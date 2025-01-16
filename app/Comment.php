@@ -10,7 +10,7 @@ function comment($id)
             return  "надо внести приход";
             break;
         case 2:
-            return "надо внести все значения платежа";
+            return "надо внести все значения платежа";   
             break;
         case 3:
             return "ошибка с payment";
