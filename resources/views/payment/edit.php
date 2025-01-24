@@ -1,5 +1,5 @@
 <div>
-    <a href="/money2/cabinet">На главную</a>
+    <a href="/cabinet">На главную</a>
 </div>
 <!-- 
     .........
@@ -11,7 +11,7 @@
     <!-- прилетает из -app/Controllers/PaymentController.php  editPaymentController($idPayment)-->
     <?php foreach($findOneIdPayment as $result){ ?>
 <div>
-    <form action="/money2/updatepayment" method="POST">
+    <form action="/updatepayment" method="POST">
         <div >id -  <?php echo $result['idpayment']; ?></div> 
         <div >Категория платежа -  <?php echo $result['payment_category_name']; ?></div>
         <input type="text" value="<?php echo $result['payment_sum']; ?>" name="payment"> <!--  новый платеж -->

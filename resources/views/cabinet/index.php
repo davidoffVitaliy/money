@@ -4,7 +4,7 @@
 <div class="b-wrapper">
 	<header class="b-header">
 		<div class="div-exit">
-		    <button class="btn btn-exit-link" onclick="document.location='/money2/main'">Выход</button>
+		    <button class="btn btn-exit-link" onclick="document.location='/main'">Выход</button>
 		</div>
 	</header>
 <!----end header---------------------------------------------------------------->	

@@ -3,8 +3,9 @@
 
 function getUri()
 {
-    $result = trim($_SERVER['REQUEST_URI'], '/');
-    return substr($result, 7);
+    return $result = trim($_SERVER['REQUEST_URI'], '/');
+    //return $_SERVER['REQUEST_URI'];
+    //return substr($result, 7);
 }
 
 

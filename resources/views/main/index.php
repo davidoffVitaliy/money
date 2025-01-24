@@ -4,7 +4,7 @@
 <body>
     <div class="b-wrapper">
         <header class="b-header">
-            <a class="link-to-cabineet" href="/money2/cabinet">
+            <a class="link-to-cabineet" href="/cabinet">
                 <div class="b-btn-cabinet">
                     Деньги
                 </div>
