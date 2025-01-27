@@ -27,9 +27,9 @@ function createExchangeController()
             if($lastAssetSumSpending >= $sumExchangeSpending){
                 // создаю запись -расход в таблице payment
         
-                $createPaymentSpendig = createPayment($db, $sumExchangeSpending, 6, $assetCategoryIdSpending, $dateExchange); 
+                $createPaymentSpendig = createPayment($db, $sumExchangeSpending, 4, $assetCategoryIdSpending, $dateExchange); 
                 // 
-                $createPaymentRevenue = createPayment($db, $sumExchangeRevenue, 7, $assetCategoryIdRevenue, $dateExchange); 
+                $createPaymentRevenue = createPayment($db, $sumExchangeRevenue, 5, $assetCategoryIdRevenue, $dateExchange); 
                 
                 // нахожу новый остаток актива расхода, чтоб внести его в таблицу asset
                 $sumNewSpending = $lastAssetSumSpending - $sumExchangeSpending;  

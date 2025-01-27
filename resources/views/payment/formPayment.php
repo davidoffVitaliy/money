@@ -11,7 +11,7 @@
           <div id="Income" class="tabcontent">
             <h3>Приход</h3>
                 <!--- Форма отправляет данные для внесения прихода в - app\Controllers\PaymentController.php   @createPaymentController()--->
-                <form action="/money2/createpayment" method="POST" id="myForm">
+                <form action="/createpayment" method="POST" id="myForm">
                     <p>
                         <label for="date">Дата платежа: </label>
                         <input type="date" id="date" name="date"/>
@@ -36,7 +36,7 @@
             <!--- Форма отправляет данные для внесения расхода в - app\Controllers\PaymentController.php   @createPaymentController()--->
             <div id="expense" class="tabcontent">
             <h3>Расход</h3>
-                <form action="/money2/createpayment" method="POST">
+                <form action="/createpayment" method="POST">
                     <div>
                     <p>
                         <label for="date">Дата платежа: </label>
@@ -62,7 +62,7 @@
             <!--- Форма отправляет данные для внесения обмена/перевода со счёта на счёт в - app\Controllers\PaymentController.php   @createPaymentController()--->
             <div id="exchange" class="tabcontent">
             <h3>Обмен</h3>
-                <form action="/money2/exchange" method="POST"> 
+                <form action="/exchange" method="POST"> 
                     <p>
                         <label for="date">Дата платежа: </label>
                         <input type="date" id="date" name="date">
