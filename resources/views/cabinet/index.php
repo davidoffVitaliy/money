@@ -119,9 +119,15 @@
 				<?php echo $transaction['payment_sum'] ?>
 				<?php } ?></td>
 				<td><?php echo $transaction['asset_category_name'] ?></td>
-				<td><a class="update" href="editpayment/<?php echo $transaction['idpayment']; ?>" >редактировать</a></td>
 				<td>
-				<form action="/money2/deletepayment" method="POST">
+				<?php if($transaction['payment_category_id'] != 4 AND $transaction['payment_category_id'] !=5){?>	
+				<a class="update" href="editpayment/<?php echo $transaction['idpayment']; ?>" >редактировать</a>
+				<?php } else { ?>
+					<a class="update" href="editexchange/<?php echo $transaction['idpayment']; ?>" >редактировать</a>
+				<?php } ?>	
+				</td>
+				<td>
+				<form action="/deletepayment" method="POST">
 					<!--  id записи , которая редактируется -->
 					<input type="hidden" name="idpayment" value="<?php echo $transaction['idpayment']; ?>"> 
 					<input type="hidden" name="payment_sum" value="<?php echo $transaction['payment_sum']; ?>"> 

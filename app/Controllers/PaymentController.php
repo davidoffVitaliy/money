@@ -114,6 +114,20 @@ function editPaymentController($idPayment)
     return render('Template', ['title'=>'Редактирование платежа', 'content'=>$content]);
 }
 
+// вывести файл редактирования платежа
+function editexchangePaymentController($idPayment)
+{
+    
+    $cont = [
+        // сумма выбраного платежа для внесения в форму для редактирования
+        'findOneIdPayment'=>findOneIdPayment($idPayment)
+        ];
+
+    $content = render('payment/editexchange', $cont);
+    return render('Template', ['title'=>'Редактирование обмена', 'content'=>$content]);
+}
+
+
 // редактирование данных платежа, баланса
 function updatePaymentController()
 {

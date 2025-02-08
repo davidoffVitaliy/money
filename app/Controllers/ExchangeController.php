@@ -25,8 +25,11 @@ function createExchangeController()
             $lastAssetSumSpending = findLastAssetOnlySum($assetCategoryIdSpending);
             // Если расход не больше остатка актива, то вношу в таблицы
             if($lastAssetSumSpending >= $sumExchangeSpending){
+                
+                // создаю токен обмена для внесения в таблицу payment
+                // 
+
                 // создаю запись -расход в таблице payment
-        
                 $createPaymentSpendig = createPayment($db, $sumExchangeSpending, 4, $assetCategoryIdSpending, $dateExchange); 
                 // 
                 $createPaymentRevenue = createPayment($db, $sumExchangeRevenue, 5, $assetCategoryIdRevenue, $dateExchange); 
